@@ -1,0 +1,17 @@
+Flask~=1.1.2
+requests~=2.25.1
+Flask-API.yandex~=0.6.2.1
+click~=7.1.2
+Werkzeug~=1.0.1
+numpy~=1.20.1
+setuptools==54.1.1
+Flask-Caching==1.10.0
+PyYAML~=5.4.1
+apispec~=4.3.0
+marshmallow~=3.10.0
+apispec-webframeworks~=0.5.2
+flask-swagger-ui~=3.36.0
+pandas~=1.2.2
+geopy~=2.1.0
+lxml~=4.6.2
+multiexit~=1.5.0

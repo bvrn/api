@@ -1,0 +1,4 @@
+include bvrnapi/schema.sql
+graft bvrnapi/static
+graft bvrnapi/templates
+global-exclude *.pyc
