@@ -2,11 +2,10 @@
 
 import yaml
 from apispec import APISpec
-from apispec.utils import validate_spec
 from apispec.ext.marshmallow import MarshmallowPlugin
+from apispec.utils import validate_spec
 from apispec_webframeworks.flask import FlaskPlugin
 from marshmallow import Schema, fields
-
 
 OPENAPI_SPEC = """
 openapi: 3.0.2
@@ -29,21 +28,35 @@ spec = APISpec(
     version=spec_version,
     openapi_version=openapi_version,
     plugins=[FlaskPlugin(), MarshmallowPlugin()],
-    **settings
+    **settings,
 )
 
 
 # Define schemas
 class AssociationRecordSchema(Schema):
-    address = fields.String(description="Address of association.", example="Musterweg 666", required=True)
-    association = fields.String(description="Name of association.", example="Musikverein Musik e.V.", required=True)
-    city = fields.String(description="City of association.", example="Musterhausen", required=True)
-    homepage = fields.String(description="Homepage of association.", example="https://example.com", required=False)
+    address = fields.String(
+        description="Address of association.", example="Musterweg 666", required=True
+    )
+    association = fields.String(
+        description="Name of association.",
+        example="Musikverein Musik e.V.",
+        required=True,
+    )
+    city = fields.String(
+        description="City of association.", example="Musterhausen", required=True
+    )
+    homepage = fields.String(
+        description="Homepage of association.",
+        example="https://example.com",
+        required=False,
+    )
     plz = fields.Int(description="PLZ of association.", example=12345, required=True)
 
 
 class AssociationsSchema(Schema):
-    total = fields.Int(description="Number of elements returned.", example=1, required=True)
+    total = fields.Int(
+        description="Number of elements returned.", example=1, required=True
+    )
     values = fields.List(fields.Nested(AssociationRecordSchema), required=True)
 
 
@@ -72,21 +85,66 @@ class NamedetailsSchema(Schema):
 
 
 class LocationRecordSchema(Schema):
-    place_id = fields.Int(description="reference to the Nominatim internal database ID", example=258050005, required=True)
-    osm_id = fields.Int(description="reference to the OSM object (with osm_type)", example=285864, required=True)
-    osm_type = fields.String(description="reference to the OSM object (with osm_id)", example="relation", required=True)
-    boundingbox = fields.List(fields.String, example=["49.3520029", "49.4596927", "8.5731788", "8.7940496"], description="area of corner coordinates [min latitude, max latitude, min longitude, max longitude]", required=True)
-    lat = fields.String(description="latitude of the centroid of the object", example="49.4093582", required=True)
-    long = fields.String(description="longitude of the centroid of the object", example="8.694724", required=True)
-    display_name = fields.String(description="full comma-separated address", example="Heidelberg, Baden-Württemberg, Deutschland", required=True)
-    importance = fields.Float(description="computed importance rank", example=0.7630143067958192, required=True)
-    icon = fields.String(description="link to class icon (if available)", example="https://nominatim.openstreetmap.org/ui/mapicons//poi_boundary_administrative.p.20.png", required=True)
-    address = fields.Nested(AddressSchema, description="dictionary of address details", required=True)
-    namedetails = fields.Nested(NamedetailsSchema, description="dictionary with full list of available names including ref etc.", required=True)
+    place_id = fields.Int(
+        description="reference to the Nominatim internal database ID",
+        example=258050005,
+        required=True,
+    )
+    osm_id = fields.Int(
+        description="reference to the OSM object (with osm_type)",
+        example=285864,
+        required=True,
+    )
+    osm_type = fields.String(
+        description="reference to the OSM object (with osm_id)",
+        example="relation",
+        required=True,
+    )
+    boundingbox = fields.List(
+        fields.String,
+        example=["49.3520029", "49.4596927", "8.5731788", "8.7940496"],
+        description="area of corner coordinates [min latitude, max latitude, min longitude, max longitude]",
+        required=True,
+    )
+    lat = fields.String(
+        description="latitude of the centroid of the object",
+        example="49.4093582",
+        required=True,
+    )
+    long = fields.String(
+        description="longitude of the centroid of the object",
+        example="8.694724",
+        required=True,
+    )
+    display_name = fields.String(
+        description="full comma-separated address",
+        example="Heidelberg, Baden-Württemberg, Deutschland",
+        required=True,
+    )
+    importance = fields.Float(
+        description="computed importance rank",
+        example=0.7630143067958192,
+        required=True,
+    )
+    icon = fields.String(
+        description="link to class icon (if available)",
+        example="https://nominatim.openstreetmap.org/ui/mapicons//poi_boundary_administrative.p.20.png",
+        required=True,
+    )
+    address = fields.Nested(
+        AddressSchema, description="dictionary of address details", required=True
+    )
+    namedetails = fields.Nested(
+        NamedetailsSchema,
+        description="dictionary with full list of available names including ref etc.",
+        required=True,
+    )
 
 
 class LocationsSchema(Schema):
-    locations = fields.Dict(keys=fields.String(), values=fields.Nested(LocationRecordSchema))
+    locations = fields.Dict(
+        keys=fields.String(), values=fields.Nested(LocationRecordSchema)
+    )
 
 
 class InputSchema(Schema):
@@ -107,15 +165,9 @@ spec.components.schema("Output", schema=OutputSchema)
 
 # add swagger tags that are used for endpoint annotation
 tags = [
-    {'name': 'associations',
-     'description': 'Vereine / Verbände'
-     },
-    {'name': 'testing',
-     'description': 'For testing the API.'
-     },
-    {'name': 'calculation',
-     'description': 'Functions for calculating.'
-     },
+    {"name": "associations", "description": "Vereine / Verbände"},
+    {"name": "testing", "description": "For testing the API."},
+    {"name": "calculation", "description": "Functions for calculating."},
 ]
 
 for tag in tags:
