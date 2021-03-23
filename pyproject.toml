@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "bvrnapi"
+version = "0.1.0"
+description = ""
+authors = ["Jan Otto <kontakt@jc-otto.de>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Flask = "*"
+Flask-API = "*"
+Flask-Caching = "*"
+multiexit = "*"
+flask-apispec = "*"
+apispec-webframeworks = "*"
+flask-swagger-ui = "*"
+pandas = "*"
+geopy = "*"
+numpy = "*"
+requests = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+pre-commit = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
