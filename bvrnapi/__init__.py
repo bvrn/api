@@ -4,10 +4,10 @@ import tempfile
 from flask import Flask, jsonify
 from multiexit import install, register
 
-from bvrnapi.cache import cache
 from bvrnapi.api_spec import spec
-from bvrnapi.endpoints.swagger import swagger_ui_blueprint, SWAGGER_URL
+from bvrnapi.cache import cache
 from bvrnapi.endpoints.associations import associations_bp
+from bvrnapi.endpoints.swagger import SWAGGER_URL, swagger_ui_blueprint
 
 
 def create_app(test_config=None):
@@ -26,13 +26,13 @@ def create_app(test_config=None):
     print("Cache Directory: {}".format(cache_dir.name))
 
     app.config.from_mapping(
-        SECRET_KEY='dev',
-        CACHE_TYPE='filesystem',
+        SECRET_KEY="dev",
+        CACHE_TYPE="filesystem",
         CACHE_DIR=cache_dir.name,
     )
     if test_config is None:
         # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
+        app.config.from_pyfile("config.py", silent=True)
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
@@ -47,7 +47,7 @@ def create_app(test_config=None):
     # register all swagger documented functions here
     with app.test_request_context():
         for fn_name in app.view_functions:
-            if fn_name == 'static':
+            if fn_name == "static":
                 continue
             print(f"Loading swagger docs for function: {fn_name}")
             view_fn = app.view_functions[fn_name]

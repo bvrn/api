@@ -1,21 +1,22 @@
-from flask import Blueprint, jsonify, request, current_app, url_for
-from flask_api import status
-import requests
-import numpy as np
-import os
 import json
+import os
+
+import numpy as np
+import requests
+from flask import Blueprint, current_app, jsonify, request, url_for
+from flask_api import status
 
 from bvrnapi.cache import cache
-from bvrnapi.lib.helper.responses.response_filter import is_success
-from bvrnapi.lib.connect.commusic import commusic_df, ResponseException
+from bvrnapi.lib.connect.commusic import ResponseException, commusic_df
 from bvrnapi.lib.connect.nominatim import geocode_city
 from bvrnapi.lib.helper.responses import get_error_response
+from bvrnapi.lib.helper.responses.response_filter import is_success
 
 associations_bp = Blueprint(name="associations", import_name=__name__)
 
 
-@associations_bp.route('', methods=['GET'])
-@cache.cached(timeout=60*60*12, response_filter=is_success)
+@associations_bp.route("", methods=["GET"])
+@cache.cached(timeout=60 * 60 * 12, response_filter=is_success)
 def associations():
     """
     ---
@@ -37,13 +38,13 @@ def associations():
 
     response_json = {
         "total": len(table.index),  # TODO: add other attributes?
-        "values": table.replace(np.nan, '', regex=True).to_dict('records')
+        "values": table.replace(np.nan, "", regex=True).to_dict("records"),
     }
 
     return jsonify(response_json)
 
 
-@associations_bp.route('/locations', methods=['GET'])
+@associations_bp.route("/locations", methods=["GET"])
 def associations_locations():
     """
     ---
@@ -73,7 +74,11 @@ def associations_locations():
         if geocode_city_result is not None:
             locations[city] = geocode_city_result.raw
         else:
-            print("city '{}' from association '{}' not found".format(city, association["association"]))  # TODO: just for debugging, remove / replace by notification
+            print(
+                "city '{}' from association '{}' not found".format(
+                    city, association["association"]
+                )
+            )  # TODO: just for debugging, remove / replace by notification
     # file_path = os.path.join(current_app.config["CACHE_DIR"], "locations.json")
     # if os.path.isfile(file_path):
     #     with open(file_path, 'r') as file:

@@ -1,6 +1,6 @@
+import pandas as pd
 import requests
 from flask_api import status
-import pandas as pd
 
 from bvrnapi.lib.helper.responses.response_exception import ResponseException
 
