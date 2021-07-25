@@ -16,3 +16,8 @@ repos:
     rev: "20.8b1"
     hooks:
       - id: "black"
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v0.0.4
+    hooks:
+      - id: pycln
+        args: [--config=pyproject.toml]
