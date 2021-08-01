@@ -3,21 +3,21 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: "v3.4.0"
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
     hooks:
-      - id: "trailing-whitespace"
-      - id: "end-of-file-fixer"
-  - repo: "https://github.com/PyCQA/isort"
-    rev: "5.8.0"
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.9.3
     hooks:
-      - id: "isort"
-  - repo: "https://github.com/psf/black"
-    rev: "20.8b1"
+      - id: isort
+  - repo: https://github.com/psf/black
+    rev: 21.7b0
     hooks:
-      - id: "black"
+      - id: black
   - repo: https://github.com/hadialqattan/pycln
-    rev: v0.0.4
+    rev: 0.0.4
     hooks:
       - id: pycln
         args: [--config=pyproject.toml]
