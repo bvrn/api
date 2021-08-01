@@ -27,6 +27,7 @@ pre-commit = "^2.13.0"
 pycln = "^0.0.4"
 isort = "^5.9.2"
 black = "^21.7b0"
+pipreqs = "^0.4.10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
