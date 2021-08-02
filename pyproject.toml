@@ -35,3 +35,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pycln]
 all = true
+
+[tool.isort]
+profile = "black"
