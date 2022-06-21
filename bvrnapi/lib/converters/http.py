@@ -2,7 +2,7 @@ import requests
 from pydantic import ValidationError
 from pydantic.tools import parse_obj_as
 
-from bvrnapi.models.httpurl_status import HttpsUrlStatus, HttpUrlStatus
+from bvrnapi.schemas.httpurl_status import HttpsUrlStatus, HttpUrlStatus
 
 
 def best_httpurl(url: str):
@@ -11,11 +11,10 @@ def best_httpurl(url: str):
     :param url: (bad) url string
     :return: HttpUrlStatus, HttpsUrlStatus or None
     """
-    if not url or "@" in url:  # empty url or url with @ symbol will always return None
+    if not url:  # empty url will always return None
         return None
     if "@" in url:  # url with @ symbol will also return None
-        # TODO insert problem (why @ symbol in url? url with authentication or e-mail address?)
-        return None
+        raise ValueError("URLs with an @ symbol are not supported.")
 
     url_formatted = url.lower()
     if url_formatted.startswith("http://"):
@@ -26,8 +25,8 @@ def best_httpurl(url: str):
 
     try:
         parsed = parse_obj_as(HttpsUrlStatus, url_formatted)
-        if url_formatted is not url:
-            pass  # TODO insert problem (homepage should be https (url: ...))
+        # if url_formatted is not url:
+        #     pass  # TODO insert problem (homepage should be https (url: ...))
         return parsed
     except (
         requests.exceptions.SSLError,
@@ -37,11 +36,9 @@ def best_httpurl(url: str):
         # no https available
         url_formatted = url_formatted.replace("https://", "http://")
         assert url_formatted.startswith("http://")
-        try:
-            parsed = parse_obj_as(HttpUrlStatus, url_formatted)
-            if url_formatted is not url:
-                pass  # TODO insert problem (homepage should be available via https (url: ...))
-            return parsed
-        except (ValidationError, requests.exceptions.ConnectionError):
-            # TODO insert problem (homepage not found / reachable)
-            return None
+
+        # raises ValidationError or requests.exceptions.ConnectionError if homepage not found or reachable
+        parsed = parse_obj_as(HttpUrlStatus, url_formatted)
+        # if url_formatted is not url:
+        #     pass  # TODO insert problem (homepage should be available via https (url: ...))
+        return parsed
