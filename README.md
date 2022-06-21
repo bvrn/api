@@ -1,7 +1,7 @@
 # BVRN API
 
 An API for various operation around music associations.
-Used and developed for [Blasmusikverband Rhein-Neckar e.V.](https://www.bvrn.de/)
+Used and developed for [Blasmusikverband Rhein-Neckar e.V.](https://www.bvrn.de/).
 
 ## Local development
 
