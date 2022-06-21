@@ -2,15 +2,11 @@ from typing import List
 
 from sqlalchemy.orm import Session
 
-from bvrnapi.models.associations import Association
-from bvrnapi.models.associations import AssociationCreate as AssociationModel
+from bvrnapi.schemas.associations import Association
+from bvrnapi.schemas.associations import AssociationCreate as AssociationModel
 
 from .models import Association as AssociationDB
 from .models import AssociationHomepage as AssociationHomepageDB
-
-
-def get_association(db: Session, number: str):
-    return db.query(AssociationDB).filter(AssociationDB.number == number).first()
 
 
 def get_homepage(db: Session, number: str):
@@ -19,15 +15,6 @@ def get_homepage(db: Session, number: str):
         .filter(AssociationHomepageDB.association_number == number)
         .first()
     )
-
-
-def get_association_by_name(db: Session, association_name: str):
-    return (
-        db.query(AssociationDB)
-        .filter(AssociationDB.association_name == association_name)
-        .first()
-    )
-
 
 def get_associations(db: Session, skip: int = 0, limit: int = 100):
     associations_db = db.query(AssociationDB).offset(skip).limit(limit).all()
